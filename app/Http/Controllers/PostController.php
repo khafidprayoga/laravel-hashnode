@@ -42,7 +42,7 @@ class PostController extends Controller
             'query' => '
             query Publication {
           publication(host: "khafidprayoga.my.id") {
-            post(slug: "load-testing-with-grafana-k6-and-influxdb") {
+            post(slug: "code-embed-test") {
               title
               slug
               content {
@@ -68,13 +68,18 @@ class PostController extends Controller
           }
         }'
         ]);
+
         $post = $data->json()['data']['publication']['post'];
+        $tags = $post['tags'];
+
+        $content = $post['content']['html'];
 
 
         $debugger::debug($post);
         return view('pages.about', [
             'title' => $post['title'],
-            'content' => $post['content']['html'],
+            'content' => $content,
+            'tags' => $tags,
         ]);
     }
 }
