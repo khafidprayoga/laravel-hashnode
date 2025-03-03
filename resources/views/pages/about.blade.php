@@ -5,6 +5,11 @@
 @else
     @section('title', 'About This Site')
 @endisset
+<head>
+    @vite(['resources/scss/app.scss' ])
+
+    @stack('head')
+</head>
 
 @section('content')
     <div class="
