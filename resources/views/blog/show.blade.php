@@ -4,13 +4,14 @@
 
 @section('content')
     <nav id="navigation">
-        <ul class="">
+        <ul id="left-navigation">
             <li>
                 <a href="{{ route('blog.index') }}" class="btn btn-primary">
                     << back to home
                 </a>
             </li>
         </ul>
+        <span id="center-navigation">{{ config('app.name') }}</span>
         <ul id="right-navigation">
             <li>
                 <a href="{{ route('page.about') }}" class="btn btn-primary">
@@ -33,7 +34,7 @@
         <div id="post-head">
             <h1 class="post-title">{{ $post['title'] }}</h1>
             @if(!is_null($post['coverImage']))
-                <img src="{{ $post['coverImage']['url'] }}" alt="{{ $post['title'] }}" class="post-cover-image">
+                <img src="{{ $post['coverImage']['url'] }}" alt="{{ $post['title'] }}" class="post-cover-image" loading="lazy" wire:loading:.remove>
             @endif
             <div class="post-meta">
                 <span
