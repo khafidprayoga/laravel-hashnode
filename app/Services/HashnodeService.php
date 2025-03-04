@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\GraphQLRequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class HashnodeService
 {
@@ -91,12 +92,7 @@ class HashnodeService
         ]);
         $data = $response->json();
 
-        // contains query errors
-        if (isset($data['errors'])) {
-            Log::error($data['errors']);
-            throw new GraphQLRequestException(json_encode($data['errors']), 400);
-        }
-
+        $this->errCheck($data);
 
         return $data['data'];
     }
@@ -122,43 +118,42 @@ class HashnodeService
 
     public function getPost(string $slug): array
     {
-        $response = Http::post($this->url, [
-            'query' => 'query Publication {
-          publication(host: "' . $this->host . '") {
-            post(slug: "' . $slug . '") {
-              title
+        $query = '
+       query PostDetail($postId: ID!) {
+          post(id: $postId) {
+            coverImage{
+             url
+            }
+            title
+            publishedAt
+            readTimeInMinutes
+            author {
+             name
+            }
+            content {
+              html
+            }
+            tags {
+              id
+              name
               slug
-              content {
-                html,
-                markdown
-              }
-              readTimeInMinutes
-              publishedAt
-              url
-              coverImage {
-                url
-              }
-              tags {
-                name
-                slug
-              }
-              author {
-                name
-                username
-                profilePicture
-              }
             }
           }
-        }'
+}
+';
+
+        $postId = Str::after($slug, '--');
+        $response = Http::post($this->url, [
+            'query' => $query,
+            'variables' => [
+                'postId' => $postId,
+            ]
         ]);
 
-        $post = $response->json()['data']['publication']['post'];
+        $data = $response->json();
+        $this->errCheck($data);
 
-        if ($post === null) {
-            abort(404);
-        }
-
-        return $post;
+        return $data['data']['post'];
     }
 
     public
@@ -203,5 +198,15 @@ class HashnodeService
         }
 
         return $publication['posts'];
+    }
+
+    private function errCheck(array $data): void
+    {
+        // contains query errors
+        if (isset($data['errors'])) {
+            Log::error($data['errors']);
+            throw new GraphQLRequestException(json_encode($data['errors']), 400);
+        }
+
     }
 }

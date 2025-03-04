@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Services\HashnodeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
@@ -28,8 +30,12 @@ class BlogController extends Controller
 
     }
 
-    public function show($slug)
+    public function show(string $slug)
     {
-        return view('blog.show');
+        $post = $this->hashnode->getPost($slug);
+        return view('blog.show', [
+            'pageTitle' => 'Blog / ' . $post['title'],
+            'post' => $post
+        ]);
     }
 }

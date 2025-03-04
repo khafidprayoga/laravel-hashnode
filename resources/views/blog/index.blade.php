@@ -8,7 +8,7 @@
 
                 $title = $post['title'];
                 $brief = $post['brief'];
-                $slug = $post['slug'];
+                $slug = $post['slug'].'--'.$post['id'];
                 $costToread = $post['readTimeInMinutes'];
             @endphp
             <div>
