@@ -14,7 +14,7 @@
  *
  * See: https://github.com/laravel-frontend-presets/tall/issues/7
  */
- input:invalid, textarea:invalid, select:invalid {
+input:invalid, textarea:invalid, select:invalid {
     box-shadow: none;
 }
 
@@ -50,6 +50,28 @@
  * .skew-45 { ... }
  */
 
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@300;600;700;900&family=IBM+Plex+Sans:wght@300;600;700;900&family=JetBrains+Mono:wght@300;600;700;900&display=swap');
+
 [x-cloak] {
     display: none;
 }
+
+@layer base {
+    #publications {
+        @apply flex flex-col justify-center lg:w-1/3 mx-auto mt-5 space-y-3 ;
+
+        .publication-title {
+            @apply text-xl font-condensed font-black;
+        }
+
+        .publication-brief {
+            @apply text-sm font-light font-sans;
+        }
+
+        .publication-readmore {
+            @apply text-xs font-semibold underline;
+        }
+    }
+}
+

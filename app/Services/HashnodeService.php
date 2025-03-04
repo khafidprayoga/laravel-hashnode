@@ -2,13 +2,38 @@
 
 namespace App\Services;
 
+use App\Exceptions\GraphQLRequestException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class HashnodeService
 {
+    /*
+     *  @var string publicationId for khafidprayoga.my.id
+     *
+     */
+    private const publicationId = '67c1cafc6e6d991710059a07';
 
+    /*
+     * @var string authorIdMaster for primarily written blog article
+     */
+    private const authorIdMaster = '67c1cae9589c6b67f5556384';
+    /*
+     * @var string authorIdOpinion for opinion for books or current issue
+     */
+    private const authorIdOpinion = '67c5cd1d71fb56b1557fcfe5';
+
+    /*
+     * @var string host for my headless blog hostname domain
+     */
     protected string $host;
+
+    /*
+     * @var string url for hashnode graphql server endpoint
+     */
     protected string $url;
+
+    private const  paginationPageSize = 10;
 
     public function __construct()
     {
@@ -16,47 +41,83 @@ class HashnodeService
         $this->url = config('services.hashnode.url');
     }
 
-    public function getPosts(): array
+    private function searhPostOfPublication(?string $search, ?string $nextCursor, array $authorIds): array
     {
-        $response = Http::post($this->url, [
-            'query' => 'query Publication {
-          publication(host: "' . $this->host . '") {
-            posts(first: 10) {
-              edges {
-                node {
-                  title
-                  slug
-                  brief
-                  readTimeInMinutes
-                  publishedAt
-                  views
+        $query = '
+        query Posts($search: String, $publicationId: ObjectId!, $pageSize: Int!, $nextCursor: String, $authorIds: [ID!]!) {
+          publication: searchPostsOfPublication(
+            first: $pageSize
+            after: $nextCursor
+            sortBy: DATE_PUBLISHED_DESC
+            filter: {query: $search, publicationId: $publicationId, authorIds: $authorIds}
+          ) {
+            posts: edges {
+              node {
+                slug
+                id
+                title
+                publishedAt
+                brief
+                readTimeInMinutes
+                coverImage {
                   url
-                  coverImage {
-                    url
-                  }
-                  tags {
-                    name
-                    slug
-                  }
-                  author {
-                    name
-                    username
-                    profilePicture
-                  }
+                }
+                tags {
+                  id
+                  name
+                  slug
                 }
               }
             }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
           }
-        }'
+        }
+';
+
+        $response = Http::post($this->url, [
+            'query' => $query,
+            'variables' => [
+                'publicationId' => self::publicationId,
+                'pageSize' => self::paginationPageSize,
+                'authorIds' => $authorIds,
+
+                // optionals argument params
+                'nextCursor' => $nextCursor,
+                'search' => $search,
+            ]
         ]);
+        $data = $response->json();
 
-        $publication = $response->json()['data']['publication'];
-
-        if ($publication === null) {
-            abort(400, 'Hashnode host not found');
+        // contains query errors
+        if (isset($data['errors'])) {
+            Log::error($data['errors']);
+            throw new GraphQLRequestException(json_encode($data['errors']), 400);
         }
 
-        return $publication['posts'];
+
+        return $data['data'];
+    }
+
+    public function getPosts(
+        ?string $search = null,
+        ?string $nextCursor = null,
+    ): array
+    {
+        $publication = $this->searhPostOfPublication($search, $nextCursor, [self::authorIdMaster]);
+
+        return $publication['publication']['posts'];
+    }
+
+    public function getOpinions(
+        ?string $search = null,
+        ?string $nextCursor = null,
+    ): array
+    {
+        $publication = $this->searhPostOfPublication($search, $nextCursor, [self::authorIdOpinion]);
+        return $publication['publication']['posts'];
     }
 
     public function getPost(string $slug): array
@@ -100,7 +161,8 @@ class HashnodeService
         return $post;
     }
 
-    public function getPostsByTag(string $tag): array
+    public
+    function getPostsByTag(string $tag): array
     {
         $response = Http::post($this->url, [
             'query' => 'query Publication {

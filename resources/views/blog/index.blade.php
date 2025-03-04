@@ -1,21 +1,27 @@
 @extends('layouts.app')
 @section('title', 'Blog')
 @section('content')
+    <div id="publications">
+        @foreach($posts as $post)
+            @php
+                $post = $post['node'];
 
-    @foreach($posts as $post)
+                $title = $post['title'];
+                $brief = $post['brief'];
+                $slug = $post['slug'];
+                $costToread = $post['readTimeInMinutes'];
+            @endphp
+            <div>
+                <h2 class="publication-title">{{ $title}}</h2>
+                <div class="publication-brief">
+                    {!! Purifier::clean($brief) !!}
+                </div>
 
-        @php $post = $post['node']; @endphp
-
-        <h2>{{ $post['title'] }}</h2>
-
-        <div>
-            {!! Str::limit($post['brief'], 100) !!}
-        </div>
-
-        <a href="{{ url($post['slug']) }}">Read More</a>
-
-        <hr>
-
-    @endforeach
+                <div class="publication-readmore">
+                    <a href="{{ route('blog.show', ['slug'=>$slug ])}}">Read More in {{ $costToread }} minutes>>></a>
+                </div>
+            </div>
+        @endforeach
+    </div>
 
 @endsection

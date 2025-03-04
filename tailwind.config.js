@@ -4,7 +4,9 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+                condensed: ['IBM Plex Sans Condensed', ...defaultTheme.fontFamily.sans],
+                sans: ['IBM Plex Sans', ...defaultTheme.fontFamily.sans],
+                mono: ['Jebtrains Mono', ...defaultTheme.fontFamily.mono],
             },
         },
     },
