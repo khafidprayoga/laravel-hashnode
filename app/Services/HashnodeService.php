@@ -132,6 +132,7 @@ class HashnodeService
             }
             content {
               html
+              markdown
             }
             tags {
               id
