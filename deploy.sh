@@ -4,7 +4,7 @@
 git pull origin main
 
 # update dependency
-composer update
+composer update --no-dev
 npm install
 
 # building web assets
@@ -20,8 +20,8 @@ php artisan route:cache
 php artisan view:cache
 
 # Set permissions file
-chmod -R 775 storage bootstrap/cache
-chown -R www-data:www-data storage bootstrap/cache
+sudo chmod -R 775 storage bootstrap/cache
+sudo chown -R www-data:www-data storage bootstrap/cache
 
 # create public symlink to the www data
 sudo ln -s /home/thinkpad/khafidprayoga.my.id/public /var/www/khafidprayoga.my.id
