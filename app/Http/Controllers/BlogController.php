@@ -34,7 +34,7 @@ class BlogController extends Controller
     {
         $post = $this->hashnode->getPost($slug);
         return view('blog.show', [
-            'pageTitle' => 'Blog / ' . $post['title'],
+            'pageTitle' => $post['title'],
             'post' => $post
         ]);
     }
