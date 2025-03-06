@@ -63,7 +63,7 @@ html {
 
 @layer base {
     #navigation {
-        @apply flex flex-col justify-center lg:flex-row lg:justify-between px-5 py-5 ;
+        @apply flex flex-col justify-center lg:flex-row lg:justify-between px-5 py-5 font-mono;
 
         a {
             @apply text-lg font-semibold underline;
