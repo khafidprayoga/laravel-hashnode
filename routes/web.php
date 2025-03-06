@@ -26,7 +26,7 @@ Route::prefix('blog')->group(function () {
 });
 
 Route::prefix('page')->group(function () {
-    Route::get('/about-me', [PageController::class, 'about'])->name('page.about');
-    Route::get('/contact', [PageController::class, 'contact'])->name('page.contact');
-    Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('page.privacy');
+    Route::get('/about-me', [PageController::class, 'show'])->name('page.about');
+    Route::get('/contact', [PageController::class, 'show'])->name('page.contact');
+    Route::get('/privacy-policy', [PageController::class, 'show'])->name('page.privacy');
 });

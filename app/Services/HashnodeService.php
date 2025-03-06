@@ -45,7 +45,7 @@ class HashnodeService
     private function searhPostOfPublication(
         ?string $search,
         ?string $nextCursor,
-        ?array   $tagsId,
+        ?array  $tagsId,
         array   $authorIds,
     ): array
     {
@@ -174,6 +174,44 @@ class HashnodeService
         $data = $response->json();
 
         return $data['data']['post'];
+    }
+
+    public function getPage(string $slug): ?array
+    {
+        $query = '
+      query GetStaticPage($host: String!, $pageSlug: String!) {
+          publication(host: $host) {
+            staticPage(slug: $pageSlug) {
+              title
+              ogMetaData {
+                image
+              }
+              content {
+                html
+                markdown
+              }
+              seo {
+                title
+                description
+              }
+            }
+          }
+        }
+        ';
+
+        $vars = [
+            'host' => $this->host,
+            'pageSlug' => $slug,
+        ];
+        $response = Http::post($this->url, [
+            'query' => $query,
+            'variables' => $vars,
+        ]);
+
+        $data = $response->json();
+        $this->errCheck($query, $vars, $data);
+
+        return $data['data']['publication']['staticPage'];
     }
 
     private function errCheck(string $query, array $vars, array $data): void
