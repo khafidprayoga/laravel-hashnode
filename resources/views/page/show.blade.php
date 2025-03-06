@@ -6,7 +6,7 @@
     <nav id="navigation">
         <ul id="left-navigation">
             <li>
-                <a href="{{ url()->previous()}}" class="btn btn-primary">
+                <a  href="{{ route('blog.index') }}" class="btn btn-primary">
                     << back to home
                 </a>
             </li>
