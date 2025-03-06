@@ -1,6 +1,4 @@
 server {
-    listen 80;
-    listen [::]:80;
     server_name khafidprayoga.my.id;
     root /var/www/khafidprayoga.my.id/public;
 
@@ -25,9 +23,32 @@ server {
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         include fastcgi_params;
         fastcgi_hide_header X-Powered-By;
+        fastcgi_index index.php;
     }
 
     location ~ /\.(?!well-known).* {
         deny all;
     }
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/khafidprayoga.my.id/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/khafidprayoga.my.id/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = khafidprayoga.my.id) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    listen [::]:80;
+    #server_name khafidprayoga.my.id;
+    #return 404; # managed by Certbot
+    server_name 103.150.191.118;
+    return 301 https://khafidprayoga.my.id$request_uri;
 }
