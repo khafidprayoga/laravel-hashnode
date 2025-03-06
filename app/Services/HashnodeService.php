@@ -42,15 +42,20 @@ class HashnodeService
         $this->url = config('services.hashnode.url');
     }
 
-    private function searhPostOfPublication(?string $search, ?string $nextCursor, array $authorIds): array
+    private function searhPostOfPublication(
+        ?string $search,
+        ?string $nextCursor,
+        ?array   $tagsId,
+        array   $authorIds,
+    ): array
     {
         $query = '
-        query Posts($search: String, $publicationId: ObjectId!, $pageSize: Int!, $nextCursor: String, $authorIds: [ID!]!) {
+       query Posts($tagsId: [ID!], $search: String, $publicationId: ObjectId!, $pageSize: Int!, $nextCursor: String, $authorIds: [ID!]!) {
           publication: searchPostsOfPublication(
             first: $pageSize
             after: $nextCursor
             sortBy: DATE_PUBLISHED_DESC
-            filter: {query: $search, publicationId: $publicationId, authorIds: $authorIds}
+            filter: {tagIds: $tagsId, query: $search, publicationId: $publicationId, authorIds: $authorIds}
           ) {
             posts: edges {
               node {
@@ -78,21 +83,25 @@ class HashnodeService
         }
 ';
 
+        $vars = [
+            'publicationId' => self::publicationId,
+            'pageSize' => self::paginationPageSize,
+            'authorIds' => $authorIds,
+
+            // optionals argument params
+            'nextCursor' => $nextCursor,
+            'search' => $search,
+            'tagsId' => $tagsId,
+        ];
+
         $response = Http::post($this->url, [
             'query' => $query,
-            'variables' => [
-                'publicationId' => self::publicationId,
-                'pageSize' => self::paginationPageSize,
-                'authorIds' => $authorIds,
-
-                // optionals argument params
-                'nextCursor' => $nextCursor,
-                'search' => $search,
-            ]
+            'variables' => $vars,
         ]);
+
         $data = $response->json();
 
-        $this->errCheck($data);
+        $this->errCheck($query, $vars, $data);
 
         return $data['data'];
     }
@@ -100,9 +109,15 @@ class HashnodeService
     public function getPosts(
         ?string $search = null,
         ?string $nextCursor = null,
+        ?array  $tags = null,
     ): array
     {
-        $publication = $this->searhPostOfPublication($search, $nextCursor, [self::authorIdMaster]);
+        $publication = $this->searhPostOfPublication(
+            search: $search,
+            nextCursor: $nextCursor,
+            tagsId: $tags,
+            authorIds: [self::authorIdMaster]
+        );
 
         return $publication['publication']['posts'];
     }
@@ -112,11 +127,16 @@ class HashnodeService
         ?string $nextCursor = null,
     ): array
     {
-        $publication = $this->searhPostOfPublication($search, $nextCursor, [self::authorIdOpinion]);
+        $publication = $this->searhPostOfPublication(
+            search: $search,
+            nextCursor: $nextCursor,
+            authorIds: [self::authorIdOpinion]
+        );
         return $publication['publication']['posts'];
     }
 
-    public function getPost(string $slug): array
+
+    public function getPost(string $slug): ?array
     {
         $query = '
        query PostDetail($postId: ID!) {
@@ -152,57 +172,16 @@ class HashnodeService
         ]);
 
         $data = $response->json();
-        $this->errCheck($data);
 
         return $data['data']['post'];
     }
 
-    public
-    function getPostsByTag(string $tag): array
+    private function errCheck(string $query, array $vars, array $data): void
     {
-        $response = Http::post($this->url, [
-            'query' => 'query Publication {
-          publication(host: "' . $this->host . '") {
-            posts(first: 10, filter: { tagSlugs: ["' . $tag . '"] }) {
-              edges {
-                node {
-                  title
-                  slug
-                  brief
-                  readTimeInMinutes
-                  publishedAt
-                  views
-                  url
-                  coverImage {
-                    url
-                  }
-                  tags {
-                    name
-                    slug
-                  }
-                  author {
-                    name
-                    username
-                    profilePicture
-                  }
-                }
-              }
-            }
-          }
-        }'
+        Log::debug("graphql request", [
+            'query' => $query,
+            'vars' => $vars,
         ]);
-
-        $publication = $response->json()['data']['publication'];
-
-        if ($publication === null) {
-            abort(400, 'Hashnode host not found');
-        }
-
-        return $publication['posts'];
-    }
-
-    private function errCheck(array $data): void
-    {
         // contains query errors
         if (isset($data['errors'])) {
             Log::error($data['errors']);

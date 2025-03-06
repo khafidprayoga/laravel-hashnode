@@ -33,9 +33,32 @@ class BlogController extends Controller
     public function show(string $slug)
     {
         $post = $this->hashnode->getPost($slug);
+        if (is_null($post)) {
+            abort(404);
+        };
         return view('blog.show', [
             'pageTitle' => $post['title'],
             'post' => $post
+        ]);
+    }
+
+    public function indexByTag(Request $request, string $tag)
+    {
+        $search = $request->query('search', null);
+        $nextCursor = $request->query('nextCursor', null);
+
+        $tagName = $request->query('tagName', null);
+        $tagCategoryId = Str::after($tag, '---');
+
+        $posts = $this->hashnode->getPosts(
+            search: $search,
+            nextCursor: $nextCursor,
+            tags: [$tagCategoryId]
+        );
+
+        return view('blog.index_tags', [
+            'posts' => $posts,
+            'tagName' => $tagName
         ]);
     }
 }

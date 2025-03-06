@@ -6,12 +6,14 @@
     <nav id="navigation">
         <ul id="left-navigation">
             <li>
-                <a href="{{ route('blog.index') }}" class="btn btn-primary">
+                <a href="{{ url()->previous()}}" class="btn btn-primary">
                     << back to home
                 </a>
             </li>
         </ul>
-        <span id="center-navigation">{{ config('app.name') }}</span>
+        <a id="center-navigation" href="{{ route('blog.index') }}" class="btn btn-primary">
+            {{ config('app.name') }}
+        </a>
         <ul id="right-navigation">
             <li>
                 <a href="{{ route('page.about') }}" class="btn btn-primary">
@@ -59,8 +61,17 @@
                     Tags:
                     <ul>
                     @foreach ($post['tags'] as $tag)
+                            @php
+                                $slug = $tag['slug'].'---'.$tag['id'];
+
+                            @endphp
                             <li>
-                               <a href="{{ route('blog.tags', ['tag'=>$tag['slug'] ])}}">{{ $tag['name'] }}</a>
+                               <a href="{{
+                                    route('blog.tags', [
+                                        'tag'=> $slug,
+                                        'tagName'=> $tag['name'],
+                                        ])
+                            }}">{{ $tag['name'] }}</a>
                            </li>
                         @endforeach
                     </ul>

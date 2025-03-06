@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Route::prefix('blog')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('blog.index');
-    Route::get('/tag/{tag}', [BlogController::class, 'tag'])->name('blog.tags');
+    Route::get('/tag/{tag}', [BlogController::class, 'indexByTag'])->name('blog.tags');
     Route::get('/{slug}', [BlogController::class, 'show'])->name('blog.show');
 });
 

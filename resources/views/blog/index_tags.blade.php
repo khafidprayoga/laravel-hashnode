@@ -26,6 +26,10 @@
         </ul>
     </nav>
     <div id="publications">
+        @if(!is_null($tagName))
+        <span id="publications-tag">Showing post with tag: "{{ $tagName }}" or <a id="center-navigation" href="{{ route('blog.index') }}" class="btn btn-primary">reset filters</a>.</span>
+        @endif
+
         @foreach($posts as $post)
             @php
                 $post = $post['node'];
