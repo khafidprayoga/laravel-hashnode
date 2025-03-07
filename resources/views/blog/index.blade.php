@@ -35,7 +35,7 @@
                 $slug = $post['slug'].'--'.$post['id'];
                 $costToread = $post['readTimeInMinutes'];
             @endphp
-            <div>
+            <div class="publication">
                 <h2 class="publication-title">{{ $title}}</h2>
                 <div class="publication-brief">
                     {!! Purifier::clean($brief) !!}
