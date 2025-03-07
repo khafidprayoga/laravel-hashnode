@@ -93,7 +93,14 @@
                     {!! Purifier::clean($post['content']['html']) !!}
                 </div>
             </div>
-            <div id="post-footer">
+            <div id="post-footer" class="flex flex-col justify-center items-center border-b-2 border-gray-300 pb-5">
+                <h2>About Author</h2>
+                <img id="author-avatar" src="{{ $post['author']['profilePicture']  }}" class="w-40 h-40 rounded-full" loading="lazy" alt="Post author avatar"/>
+                <span class="text-xl" id="author-name">{{ $post["author"]["name"] }}</span>
+                <span class="text-md font-extralight" id="author-tagline">{{ $post["author"]["tagline"] }}</span>
+                <blockquote class="text-sm font-condensed italic">
+                    {!! $post['author']['bio']['text'] !!}
+                </blockquote>
             </div>
         </article>
     </main>

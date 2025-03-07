@@ -148,7 +148,12 @@ class HashnodeService
             publishedAt
             readTimeInMinutes
             author {
-             name
+                profilePicture
+                name
+                tagline
+                bio {
+                    text
+                }
             }
             content {
               html
