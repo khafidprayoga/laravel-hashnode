@@ -1,4 +1,4 @@
-<div class="text-center py-5 font-mono text-xs">
+<div class="text-center py-5 font-mono text-xs px-5">
     <p>
         Copyright &copy; {{date(format: "Y")}} Khafid Prayoga, All Right Reserved. This website is using cookies.
     </p>

@@ -90,9 +90,10 @@ html {
     #publications {
         @apply flex flex-col px-10 pb-10 justify-center lg:w-2/3 mx-auto  space-y-3 prose lg:prose-xl ;
 
-        #publications-tag{
+        #publications-tag {
             @apply text-xs mx-auto font-extralight;
         }
+
         .publication-title {
             @apply text-xl font-condensed font-black;
         }
@@ -109,12 +110,13 @@ html {
     #main-content {
         @apply flex flex-col justify-center px-5 py-5 w-full lg:w-1/3 mx-auto mt-5  prose prose-sm sm:prose-base  lg:min-h-screen;
 
-        #post-toc{
+        #post-toc {
             @apply hidden lg:block text-xs font-light font-sans border border-2 border-gray-300 px-5 py-2;
             span {
                 @apply font-bold;
             }
         }
+
         #post-detail {
             #post-head {
                 @apply border-b-2 border-gray-300 ;
@@ -126,7 +128,7 @@ html {
                 .post-meta {
                     @apply flex flex-col text-sm;
 
-                    #post-toc-mobile{
+                    #post-toc-mobile {
                         @apply lg:hidden text-xs font-light font-sans border border-2 border-gray-300 px-5 py-2;
                         span {
                             @apply font-bold;
@@ -146,7 +148,46 @@ html {
             #post-footer {
                 @apply border-t-2 border-gray-300 pt-5;
             }
+
+
+            #page-head {
+                @apply border-b-2 border-gray-300 ;
+
+                h1 {
+                    @apply font-sans selection:bg-blue-300  decoration-gray-500 leading-relaxed;
+                }
+
+            }
+
+            #page-body {
+                @apply font-condensed;
+            }
+
+            #page-footer {
+                @apply border-t-2 border-gray-300 pt-5;
+            }
+        }
+    }
+
+    #content-not-found {
+        @apply flex flex-col justify-center px-5 py-5 w-full lg:w-1/3 mx-auto mt-5  prose prose-sm sm:prose-base  min-h-screen;
+
+        #page-head {
+            @apply border-b-2 border-gray-300 ;
+
+            h1 {
+                @apply font-sans selection:bg-blue-300  decoration-gray-500 leading-relaxed;
+            }
+        }
+
+        #page-body {
+            @apply font-condensed;
+        }
+
+        #page-footer {
+            @apply  mt-5;
         }
     }
 }
+
 
