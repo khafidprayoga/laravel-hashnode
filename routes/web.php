@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PageController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +16,7 @@ use App\Http\Controllers\PageController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('blog.index',[],301);
+    return redirect()->route('blog.index', [], 301);
 });
 
 Route::prefix('blog')->group(function () {

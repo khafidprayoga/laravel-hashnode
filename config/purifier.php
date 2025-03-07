@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ok, glad you are here
  * first we get a config instance, and set the settings
@@ -34,9 +35,9 @@ return [
         'test' => [
             'Attr.EnableID' => 'true',
         ],
-        "youtube" => [
-            "HTML.SafeIframe" => 'true',
-            "URI.SafeIframeRegexp" => "%^(http://|https://|//)(www.youtube.com/embed/|player.vimeo.com/video/)%",
+        'youtube' => [
+            'HTML.SafeIframe' => 'true',
+            'URI.SafeIframeRegexp' => '%^(http://|https://|//)(www.youtube.com/embed/|player.vimeo.com/video/)%',
         ],
         'custom_definition' => [
             'id' => 'html5-definitions',

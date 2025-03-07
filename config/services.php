@@ -35,10 +35,9 @@ return [
         ],
     ],
 
-    'hashnode'=>[
-        'host'=> env('HASHNODE_HOST'),
+    'hashnode' => [
+        'host' => env('HASHNODE_HOST'),
         'url' => env('HASHNODE_URL', 'https://gql.hashnode.com/'),
-    ]
-
+    ],
 
 ];

@@ -12,22 +12,22 @@ class PageController extends Controller
 
     public function __construct()
     {
-        $this->hashnode = new HashnodeService();
+        $this->hashnode = new HashnodeService;
     }
 
     public function show(Request $request)
     {
-        $slug = Str::after($request->path(), "/");
+        $slug = Str::after($request->path(), '/');
         $page = $this->hashnode->getPage($slug);
 
         // empty page
         if (is_null($page)) {
             abort(404);
-        };
+        }
 
         return view('page.show', [
             'pageTitle' => $page['title'],
-            'page' => $page
+            'page' => $page,
         ]);
     }
 }

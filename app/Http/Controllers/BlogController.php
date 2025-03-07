@@ -4,17 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Services\HashnodeService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
     private HashnodeService $hashnode;
 
-
     public function __construct()
     {
-        $this->hashnode = new HashnodeService();
+        $this->hashnode = new HashnodeService;
     }
 
     public function index(Request $request)
@@ -25,7 +23,7 @@ class BlogController extends Controller
         $posts = $this->hashnode->getPosts($search, $nextCursor);
 
         return view('blog.index', [
-            'posts' => $posts
+            'posts' => $posts,
         ]);
 
     }
@@ -35,10 +33,11 @@ class BlogController extends Controller
         $post = $this->hashnode->getPost($slug);
         if (is_null($post)) {
             abort(404);
-        };
+        }
+
         return view('blog.show', [
             'pageTitle' => $post['title'],
-            'post' => $post
+            'post' => $post,
         ]);
     }
 
@@ -58,7 +57,7 @@ class BlogController extends Controller
 
         return view('blog.index_tags', [
             'posts' => $posts,
-            'tagName' => $tagName
+            'tagName' => $tagName,
         ]);
     }
 }

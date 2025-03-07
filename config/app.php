@@ -125,6 +125,6 @@ return [
 
     'aliases' => [
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
-        'Carbon'=> Carbon\Carbon::class,
-    ]
+        'Carbon' => Carbon\Carbon::class,
+    ],
 ];

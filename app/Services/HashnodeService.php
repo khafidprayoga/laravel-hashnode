@@ -19,6 +19,7 @@ class HashnodeService
      * @var string authorIdMaster for primarily written blog article
      */
     private const authorIdMaster = '67c1cae9589c6b67f5556384';
+
     /*
      * @var string authorIdOpinion for opinion for books or current issue
      */
@@ -34,7 +35,7 @@ class HashnodeService
      */
     protected string $url;
 
-    private const  paginationPageSize = 10;
+    private const paginationPageSize = 10;
 
     public function __construct()
     {
@@ -45,10 +46,9 @@ class HashnodeService
     private function searhPostOfPublication(
         ?string $search,
         ?string $nextCursor,
-        ?array  $tagsId,
-        array   $authorIds,
-    ): array
-    {
+        ?array $tagsId,
+        array $authorIds,
+    ): array {
         $query = '
        query Posts($tagsId: [ID!], $search: String, $publicationId: ObjectId!, $pageSize: Int!, $nextCursor: String, $authorIds: [ID!]!) {
           publication: searchPostsOfPublication(
@@ -109,9 +109,8 @@ class HashnodeService
     public function getPosts(
         ?string $search = null,
         ?string $nextCursor = null,
-        ?array  $tags = null,
-    ): array
-    {
+        ?array $tags = null,
+    ): array {
         $publication = $this->searhPostOfPublication(
             search: $search,
             nextCursor: $nextCursor,
@@ -125,16 +124,15 @@ class HashnodeService
     public function getOpinions(
         ?string $search = null,
         ?string $nextCursor = null,
-    ): array
-    {
+    ): array {
         $publication = $this->searhPostOfPublication(
             search: $search,
             nextCursor: $nextCursor,
             authorIds: [self::authorIdOpinion]
         );
+
         return $publication['publication']['posts'];
     }
-
 
     public function getPost(string $slug): ?array
     {
@@ -173,7 +171,7 @@ class HashnodeService
             'query' => $query,
             'variables' => [
                 'postId' => $postId,
-            ]
+            ],
         ]);
 
         $data = $response->json();
@@ -221,7 +219,7 @@ class HashnodeService
 
     private function errCheck(string $query, array $vars, array $data): void
     {
-        Log::debug("graphql request", [
+        Log::debug('graphql request', [
             'query' => $query,
             'vars' => $vars,
         ]);
