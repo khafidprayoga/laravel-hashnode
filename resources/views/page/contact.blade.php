@@ -59,19 +59,26 @@
                             <div class="flex flex-col">
                                 <x-label class="uppercase block text-xs font-medium text-gray-700 " for="full_name"/>
                                 <x-input name="full_name"
-                                         class="mt-1 w-full rounded-md border-gray-200 shadow-xs sm:text-sm"/>
+                                         class="mt-1 w-full rounded-md border-gray-200 shadow-xs sm:text-sm" autofocus value="{{ old('full_name') }}"/>
+                                @error('full_name')<span
+                                    class="text-red-500 text-xs font-bold">{{ $message }}</span>@enderror
+
                             </div>
 
                             <div class="flex flex-col mt-2">
                                 <x-label class="uppercase block text-xs font-medium text-gray-700" for="email"/>
                                 <x-input name="email" type="email"
-                                         class="mt-1 w-full rounded-md border-gray-200 shadow-xs sm:text-sm"/>
+                                         class="mt-1 w-full rounded-md border-gray-200 shadow-xs sm:text-sm" value="{{ old('email') }}"/>
+                                @error('email')<span
+                                    class="text-red-500 text-xs font-bold">{{ $message }}</span>@enderror
                             </div>
 
                             <div class="flex flex-col mt-2">
                                 <x-label class="uppercase block text-xs font-medium text-gray-700" for="messages"/>
                                 <x-textarea name="messages" rows="5"
-                                            class="mt-1 w-full rounded-md border-gray-200 shadow-xs sm:text-sm"/>
+                                            class="mt-1 w-full rounded-md border-gray-200 shadow-xs sm:text-sm" value="{{ old('messages') }}"/>
+                                @error('messages')<span
+                                    class="text-red-500 text-xs font-bold">{{ $message }}</span>@enderror
                             </div>
 
                             <div class="flex flex-col justify-center items-center mt-5 mb-5">

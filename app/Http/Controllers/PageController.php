@@ -43,12 +43,18 @@ class PageController extends Controller
             'email' => 'required|email',
             'messages' => 'required',
             'cf-turnstile-response' => ['required', Rule::turnstile()]
+        ], [
+            'full_name.required' => 'Full name required.',
+            'email.required' => 'Email required.',
+            'email.email' => 'Must be valid email.',
+            'messages.required' => 'Message required.',
+            'cf-turnstile-response.required' => 'CAPTCHA verification required.'
         ]);
 
         //  call the new guestbook event
         SendGuestbook::dispatch($body);
 
-        return view('page.contact',[
+        return view('page.contact', [
             "success_message" => "Thank you for your message."
         ]);
     }
