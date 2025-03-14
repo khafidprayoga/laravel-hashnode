@@ -34,7 +34,7 @@
     </nav>
     <main id="main-content">
         @php
-            $hasHeading = preg_match('/^#{1,6}\s+\S+/m', $post['content']['markdown']);
+            $hasHeading = str_contains($post['content']['html'], '<h2>');
         @endphp
         @if($hasHeading)
             <div id="post-toc">
@@ -95,7 +95,8 @@
             </div>
             <div id="post-footer" class="flex flex-col justify-center items-center border-b-2 border-gray-300 pb-5">
                 <h2>About Author</h2>
-                <img id="author-avatar" src="{{ $post['author']['profilePicture']  }}" class="w-40 h-40 rounded-full" loading="lazy" alt="Post author avatar"/>
+                <img id="author-avatar" src="{{ $post['author']['profilePicture']  }}" class="w-40 h-40 rounded-full"
+                     loading="lazy" alt="Post author avatar"/>
                 <span class="text-xl" id="author-name">{{ $post["author"]["name"] }}</span>
                 <span class="text-md font-extralight" id="author-tagline">{{ $post["author"]["tagline"] }}</span>
                 <blockquote class="text-sm font-condensed italic">
