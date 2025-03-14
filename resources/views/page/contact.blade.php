@@ -102,8 +102,18 @@
     </main>
 
     <script>
-        window.onTurnstileSuccess = function (code) {
-            document.querySelector('form button[type="submit"]').disabled = false;
-        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            window.onTurnstileSuccess = function (code) {
+                document.querySelector('form button[type="submit"]').disabled = false;
+            }
+
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (e) {
+                document.querySelector('form button[type="submit"]').disabled = true;
+                form.submit();
+            });
+
+        })
     </script>
 @endsection
