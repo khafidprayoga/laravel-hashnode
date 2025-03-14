@@ -22,6 +22,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @turnstileScripts()
+
+    @yield('head')
 </head>
 
 <body>

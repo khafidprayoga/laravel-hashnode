@@ -39,5 +39,9 @@ return [
         'host' => env('HASHNODE_HOST'),
         'url' => env('HASHNODE_URL', 'https://gql.hashnode.com/'),
     ],
+    'turnstile' => [
+        'key' => env('TURNSTILE_SITE_KEY'),
+        'secret' => env('TURNSTILE_SECRET_KEY'),
+    ],
 
 ];

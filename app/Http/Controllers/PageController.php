@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Services\HashnodeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class PageController extends Controller
 {
@@ -28,6 +31,24 @@ class PageController extends Controller
         return view('page.show', [
             'pageTitle' => $page['title'],
             'page' => $page,
+        ]);
+    }
+
+    public function guestbookAction(Request $request)
+    {
+        $body = $request->validate([
+            'full_name' => 'required',
+            'email' => 'required|email',
+            'messages' => 'required',
+            'cf-turnstile-response' => ['required', Rule::turnstile()]
+        ]);
+
+        // todo call the new guestbook event
+
+        Log::info($body);
+
+        return view('page.contact',[
+            "success_message" => "Thank you for your message."
         ]);
     }
 }

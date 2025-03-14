@@ -27,6 +27,7 @@ Route::prefix('blog')->group(function () {
 
 Route::prefix('page')->group(function () {
     Route::get('/about-me', [PageController::class, 'show'])->name('page.about');
-    Route::get('/contact', [PageController::class, 'show'])->name('page.contact');
+    Route::view('/contact', 'page.contact')->name('page.contact');
+    Route::post('/contact', [PageController::class, 'guestbookAction'])->name('page.guestbookAction');
     Route::get('/privacy-policy', [PageController::class, 'show'])->name('page.privacy');
 });
