@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendGuestbook;
+use App\Models\Guestbook;
 use App\Services\HashnodeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -43,9 +45,8 @@ class PageController extends Controller
             'cf-turnstile-response' => ['required', Rule::turnstile()]
         ]);
 
-        // todo call the new guestbook event
-
-        Log::info($body);
+        //  call the new guestbook event
+        SendGuestbook::dispatch($body);
 
         return view('page.contact',[
             "success_message" => "Thank you for your message."
