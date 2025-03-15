@@ -50,7 +50,7 @@ input:invalid, textarea:invalid, select:invalid {
  * .skew-45 { ... }
  */
 
-
+@import "flowbite/src/themes/default.css";
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@300;600;700;900&family=IBM+Plex+Sans:wght@300;600;700;900&family=JetBrains+Mono:wght@300;600;700;900&display=swap');
 
 [x-cloak] {
@@ -141,7 +141,7 @@ html {
                 }
 
                 .post-cover-image {
-                    @apply w-full h-auto;
+                    @apply w-[800px] h-[400x] object-cover;
                 }
             }
 
