@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+git stash
+
 # pull latest app
 git pull origin main
 
