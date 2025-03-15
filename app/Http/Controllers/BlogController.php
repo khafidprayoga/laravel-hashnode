@@ -35,9 +35,11 @@ class BlogController extends Controller
             abort(404);
         }
 
+        $hasHeadings = Str::contains($post['content']['html'], '</h2>');
         return view('blog.show', [
             'pageTitle' => $post['title'],
             'post' => $post,
+            'has_heading' => $hasHeadings,
         ]);
     }
 

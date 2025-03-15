@@ -33,10 +33,7 @@
         </ul>
     </nav>
     <main id="main-content">
-        @php
-            $hasHeading = str_contains($post['content']['html'], '<h2>');
-        @endphp
-        @if($hasHeading)
+        @if($has_heading)
             <div id="post-toc">
                 <span>Table of Contents</span>
                 <x-toc>
@@ -78,7 +75,7 @@
                 </span>
                     @endif
 
-                    @if($hasHeading)
+                    @if($has_heading)
                         <div id="post-toc-mobile">
                             <span>Table of Contents</span>
                             <x-toc>

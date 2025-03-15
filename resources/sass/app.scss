@@ -112,7 +112,7 @@ html {
     }
 
     #main-content {
-        @apply flex flex-col justify-start px-5 py-5 w-full lg:w-1/3 mx-auto mt-5  prose prose-sm sm:prose-base  lg:min-h-screen;
+        @apply flex flex-col justify-start px-5 py-5 w-full lg:w-1/3 xl:w-2/3 mx-auto mt-5  prose prose-sm sm:prose-base xl:prose-lg lg:min-h-screen;
 
         #post-toc {
             @apply hidden lg:block text-xs font-light font-sans border border-2 border-gray-300 px-5 py-2;
