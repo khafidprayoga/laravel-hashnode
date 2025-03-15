@@ -139,9 +139,14 @@ class HashnodeService
         $query = '
        query PostDetail($postId: ID!) {
           post(id: $postId) {
+            seo{
+             title
+             description
+            }
             coverImage{
              url
             }
+            brief
             title
             publishedAt
             readTimeInMinutes
@@ -151,6 +156,9 @@ class HashnodeService
                 tagline
                 bio {
                     text
+                }
+                 socialMediaLinks {
+                    twitter
                 }
             }
             content {

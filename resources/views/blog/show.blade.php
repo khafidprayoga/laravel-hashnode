@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('title', $pageTitle)
+@section('head')
+    <meta name="title" content="{{ $post['title'] }}"
+    <meta name="description" content="{{ $post['brief'] }}">
+    <meta name="keywords" content="{{ $post['brief'] }}">
+    <meta name="author" content="{{ $post['author']['name'] }}">
+    <meta name="twitter:creator"
+          content="{{ "@". \Illuminate\Support\Str::afterLast($post['author']['socialMediaLinks']['twitter'],"/")}}">
+    <meta property="og:title" content="{{ $post['title'] }}">
+    <meta property="og:description" content="{{ $post['brief'] }}">
+    <meta property="og:image" content="{{ $post['coverImage']['url'] }}">
+@endsection
 
 @section('content')
     <nav id="navigation">
