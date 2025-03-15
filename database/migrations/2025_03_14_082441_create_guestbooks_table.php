@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id()->autoIncrement();
             $table->string('full_name');
             $table->string('email')->index();
-            $table->string('messages');
+            $table->longText('messages');
             $table->timestamps();
         });
     }
