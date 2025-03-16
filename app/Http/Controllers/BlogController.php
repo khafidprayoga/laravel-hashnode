@@ -20,10 +20,11 @@ class BlogController extends Controller
         $search = $request->query('search', null);
         $nextCursor = $request->query('nextCursor', null);
 
-        $posts = $this->hashnode->getPosts($search, $nextCursor);
-
+        $publications = $this->hashnode->getPosts($search, $nextCursor);
+//        $publications = $this->hashnode->getFeeds($search, $nextCursor);
         return view('blog.index', [
-            'posts' => $posts,
+            'posts' => $publications['posts'],
+            'pagination'=> $publications['pageInfo'],
         ]);
 
     }

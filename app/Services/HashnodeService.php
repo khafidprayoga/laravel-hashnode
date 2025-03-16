@@ -46,9 +46,10 @@ class HashnodeService
     private function searhPostOfPublication(
         ?string $search,
         ?string $nextCursor,
-        ?array $tagsId,
-        array $authorIds,
-    ): array {
+        ?array  $tagsId,
+        array   $authorIds,
+    ): array
+    {
         $query = '
        query Posts($tagsId: [ID!], $search: String, $publicationId: ObjectId!, $pageSize: Int!, $nextCursor: String, $authorIds: [ID!]!) {
           publication: searchPostsOfPublication(
@@ -106,32 +107,94 @@ class HashnodeService
         return $data['data'];
     }
 
+    public function getFeeds(
+        ?string $search = null,
+        ?string $nextCursor = null,
+        ?array  $tags = null,
+    ): array
+    {
+        $query = '
+        query Feeds($pageSize: Int!, $nextCursor: String) {
+          publication: feed(first: $pageSize, after: $nextCursor) {
+            posts: edges {
+              node {
+                slug
+                id
+                title
+                publishedAt
+                brief
+                readTimeInMinutes
+                coverImage {
+                  url
+                }
+                tags {
+                  id
+                  name
+                  slug
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+          }
+        }
+
+';
+
+        $vars = [
+            'pageSize' => self::paginationPageSize,
+
+            // optionals argument params
+            'nextCursor' => $nextCursor,
+        ];
+
+        $response = Http::post($this->url, [
+            'query' => $query,
+            'variables' => $vars,
+        ]);
+
+        $data = $response->json();
+
+        $this->errCheck($query, $vars, $data);
+
+        $response = [
+            "publication" => $data['data']['publication'],
+
+        ];
+
+        return $response['publication'];
+    }
+
     public function getPosts(
         ?string $search = null,
         ?string $nextCursor = null,
-        ?array $tags = null,
-    ): array {
-        $publication = $this->searhPostOfPublication(
+        ?array  $tags = null,
+    ): array
+    {
+        $data = $this->searhPostOfPublication(
             search: $search,
             nextCursor: $nextCursor,
             tagsId: $tags,
             authorIds: [self::authorIdMaster]
         );
 
-        return $publication['publication']['posts'];
+        return $data['publication'];
     }
 
     public function getOpinions(
         ?string $search = null,
         ?string $nextCursor = null,
-    ): array {
+    ): array
+    {
         $publication = $this->searhPostOfPublication(
             search: $search,
             nextCursor: $nextCursor,
             authorIds: [self::authorIdOpinion]
         );
 
-        return $publication['publication']['posts'];
+        return $publication['publication'];
     }
 
     public function getPost(string $slug): ?array
