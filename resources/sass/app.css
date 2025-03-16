@@ -50,7 +50,7 @@ input:invalid, textarea:invalid, select:invalid {
 }
 
 body {
-  @apply bg-green-500;
+  @apply block text-center mx-auto text-3xl font-mono;
 }
 
 code {
