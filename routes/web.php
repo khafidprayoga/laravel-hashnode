@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
-use App\Livewire\Counter;
+use App\Livewire;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,3 +15,4 @@ use App\Livewire\Counter;
 */
 
 Route::view('counter', "welcome");
+Route::get('post', Livewire\CreatePost::class);
