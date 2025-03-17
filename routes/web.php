@@ -14,4 +14,4 @@ use App\Livewire\Counter;
 |
 */
 
-Route::get('counter', Counter::class);
+Route::view('counter', "welcome");

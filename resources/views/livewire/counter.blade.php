@@ -1,12 +1,20 @@
 <div>
-    {{-- The whole world belongs to you. --}}
-    <p class="mt-16">
-        {{ $count }}
-    </p>
-    <div id="action" class="flex flex-col mt-5">
+    <form>
+        <label for="counter">
+            Count: <span x-text="$wire.count"></span>
+        </label>
+        <input type="number" id="counter" wire:model.live="count">
 
-        <button class="text-sm mb-16" wire:click="increment()">Increment +</button>
-        <button class="text-sm" wire:click="decrement()">Decrement -</button>
-    </div>
+        <button type="button" wire:click="$refresh">...</button>
+        <button type="button" x-on:click="$wire.$refresh()">...</button>
 
+        <button type="reset" x-on:click="$wire.todo  = '1'">Reset</button>
+        <button
+            type="button"
+            wire:click="delete"
+            wire:confirm="Are you sure you want to delete this post?"
+        >
+            Delete post
+        </button>
+    </form>
 </div>
