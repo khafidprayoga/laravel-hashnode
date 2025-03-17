@@ -25,6 +25,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        @yield('style')
+    </style>
 </head>
 
 <body>

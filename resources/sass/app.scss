@@ -55,9 +55,21 @@ input:invalid, textarea:invalid, select:invalid {
 }
 
 body {
-    @apply block  text-center mx-auto text-3xl font-mono;
+    //@apply block  text-center mx-auto text-3xl font-mono;
 }
 
 code {
     font-family: 'JetBrains Mono', monospace;
+}
+
+#phone-book {
+    @apply flex flex-col items-center mt-10 gap-2;
+
+    ul {
+        li {
+            span {
+                @apply text-sm font-mono underline;
+            }
+        }
+    }
 }

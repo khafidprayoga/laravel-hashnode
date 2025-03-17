@@ -3,8 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Sushi;
-
+use Sushi\Sushi;
 /**
  * @method static self first()
  * @method static self find($id)
@@ -12,7 +11,7 @@ use Sushi;
  */
 class Contact extends Model
 {
-    use Sushi\Sushi;
+    use Sushi;
 
     protected $rows = [
         [
@@ -366,4 +365,5 @@ class Contact extends Model
             "is_deleted" => false,
         ],
     ];
+
 }
