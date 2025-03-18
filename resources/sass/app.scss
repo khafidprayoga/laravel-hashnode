@@ -72,4 +72,11 @@ code {
             }
         }
     }
+
+}
+
+form {
+    .form-control{
+        @apply flex flex-col gap-2;
+    }
 }

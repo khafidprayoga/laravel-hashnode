@@ -10,16 +10,23 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class ContactList extends Component
 {
-    public string $name = '';
-    public string $phone = '';
-    public string $address = '';
+    public array $contacts;
+    public array $newContact = [
+        'name' => '',
+        'phone' => '',
+        'address' => '',
+    ];
 
     public function mount()
     {
-        $contacts = Contact::first();
-        $this->fill(
-            $contacts->only('name', 'phone', 'address')
-        );
+        $this->contacts = Contact::query()->where('is_deleted', false)->orderBy('id','desc')->limit(3)->get()->toArray();
+    }
+
+    public function addContact()
+    {
+        $this->contacts[] = Contact::query()->create($this->newContact)->toArray();
+
+        $this->newContact = [];
     }
 
     public function render()

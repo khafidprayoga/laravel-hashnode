@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Sushi\Sushi;
+
 /**
  * @method static self first()
  * @method static self find($id)
@@ -13,6 +14,11 @@ class Contact extends Model
 {
     use Sushi;
 
+    public $fillable = [
+        'name',
+        'phone',
+        'address',
+    ];
     protected $rows = [
         [
             "id" => 1,

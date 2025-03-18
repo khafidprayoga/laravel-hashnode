@@ -60,4 +60,8 @@ code {
   @apply text-sm font-mono underline;
 }
 
+form .form-control {
+  @apply flex flex-col gap-2;
+}
+
 /*# sourceMappingURL=app.css.map */
