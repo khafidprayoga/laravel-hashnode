@@ -1,4 +1,3 @@
-
 <div id="phone-book">
     <h1>Phone Book Contact</h1>
 
@@ -8,8 +7,11 @@
             <span id="name" x-text="$wire.name"></span>
         </li>
         <li>
+            <input type="text" wire:model="name" placeholder="Name">
+        </li>
+        <li>
             <label for="phone">Phone:</label>
-            <span id="phone">+{{ $phone }}</span>
+            <span id="phone" x-text="$wire.phone"></span>
         </li>
         <li>
             <label for="address">Address:</label>
