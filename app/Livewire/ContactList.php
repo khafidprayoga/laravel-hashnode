@@ -26,9 +26,9 @@ class ContactList extends Component
 
     public function addContact()
     {
-        $this->contacts[] = Contact::query()->create($this->newContact)->toArray();
-
-        $this->reset('newContact');
+//        $this->contacts[] = Contact::query()->create($this->newContact)->toArray();
+        $this->contacts[] = Contact::query()->create($this->pull('newContact'))->toArray();
+//        $this->reset('newContact');
 //        simplify many props varibale
 //        $this->reset('newContact', 'contacts');
 //         specific vars repeatedly
