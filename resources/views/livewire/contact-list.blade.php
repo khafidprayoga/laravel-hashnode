@@ -13,6 +13,7 @@
         @endforeach
     </ul>
 
+
     <form wire:submit.prevent="addContact">
         <div class="form-control">
             <label for="name">Name</label>
@@ -32,4 +33,11 @@
             <button type="submit" class="px-5 py-5 bg-gray-300 w-32 h-16 text-xs text-center">Save</button>
         </div>
     </form>
+
+    <div>
+        <p>Last inserted</p>
+        <p>Name: {{$newContact['name']}}</p>
+        <p>Phone: {{$newContact['phone']}}</p>
+        <p>Address: {{$newContact['address']}}</p>
+    </div>
 </div>

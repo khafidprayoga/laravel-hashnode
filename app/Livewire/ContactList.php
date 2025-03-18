@@ -11,6 +11,8 @@ use Livewire\Component;
 class ContactList extends Component
 {
     public array $contacts;
+
+    // default values here not from the mount method
     public array $newContact = [
         'name' => '',
         'phone' => '',
@@ -26,7 +28,11 @@ class ContactList extends Component
     {
         $this->contacts[] = Contact::query()->create($this->newContact)->toArray();
 
-        $this->newContact = [];
+        $this->reset('newContact');
+//        simplify many props varibale
+//        $this->reset('newContact', 'contacts');
+//         specific vars repeatedly
+//         $this->newContact = [];
     }
 
     public function render()
