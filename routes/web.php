@@ -18,3 +18,4 @@ use App\Livewire;
 Route::view('counter', "welcome");
 Route::get('post', Livewire\CreatePost::class);
 Route::get('contacts', Livewire\ContactList::class);
+Route::get('contact', Livewire\ContactDetail::class);
