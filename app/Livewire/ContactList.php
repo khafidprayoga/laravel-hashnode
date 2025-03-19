@@ -33,6 +33,7 @@ class ContactList extends Component
 //        $this->reset('newContact', 'contacts');
 //         specific vars repeatedly
 //         $this->newContact = [];
+        $this->js("onAddContact");
     }
 
     public function render()
