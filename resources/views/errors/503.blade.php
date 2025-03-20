@@ -3,15 +3,7 @@
 @section('title', "Server Maintenance")
 
 @section('content')
-    <nav id="navigation">
-        <ul id="left-navigation">
-        </ul>
-        <a id="center-navigation" >
-            {{ config('app.name') }}
-        </a>
-        <ul id="right-navigation">
-        </ul>
-    </nav>
+    <livewire:navigation/>
     <main id="error-content">
         <section id="page-detail">
             <div id="page-head">
