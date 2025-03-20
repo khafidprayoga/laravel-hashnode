@@ -1,11 +1,24 @@
 <nav id="navigation">
     <ul id="left-navigation">
+        @php
+            $urlRefFirstLoad  = url()->previous() == url()->current()
+        @endphp
         @if($showBackBtn)
-            <li>
-                <a href="{{ url()->previous() }}" wire:navigate.hover>
-                    << back to home
-                </a>
-            </li>
+
+            @if($urlRefFirstLoad)
+                <li>
+                    <a href="{{ route('blog.index')}}" wire:navigate.hover>
+                        << back to home
+                    </a>
+                </li>
+            @else
+                <li>
+                    <a href="{{ url()->previous() }}" wire:navigate.hover>
+                        << back to home
+                    </a>
+                </li>
+            @endif
+
         @endif
     </ul>
     <a id="center-navigation" href="{{ route('blog.index') }}" wire:navigate.hover>
