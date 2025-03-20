@@ -87,10 +87,10 @@ html {
     }
 
     #publications {
-        @apply flex flex-col px-10 pb-10 items-start lg:w-2/3 mx-auto  space-y-3 prose lg:prose-xl min-h-screen ;
+        @apply flex flex-col lg:px-10 pb-10 items-start lg:w-2/3 mx-auto  lg:space-y-3 prose lg:prose-xl min-h-screen ;
 
         .publication {
-            @apply px-5 py-5;
+            @apply px-5 lg:py-5;
 
             #publications-tag {
                 @apply text-xs mx-auto font-extralight;
