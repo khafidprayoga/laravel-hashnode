@@ -19,7 +19,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('page.contact') }}" class="text-lg font-light" wire:navigate
+            <a href="{{ route('page.contact') }}" class="text-lg font-light"
                wire:current="font-semibold underline">
                 contact
             </a>
