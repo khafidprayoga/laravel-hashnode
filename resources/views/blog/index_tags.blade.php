@@ -4,7 +4,7 @@
     <livewire:navigation/>
     <div id="publications">
         @if(!is_null($tagName))
-            <span id="publications-tag">Showing post with tag: "{{ $tagName }}" or <a id="center-navigation"
+            <span id="publications-tag" class="text-sm font-extralight md:mx-auto px-5 md:px-0">Showing post with tag: "{{ $tagName }}" or <a
                                                                                       href="{{ route('blog.index') }}"
                                                                                       class="btn btn-primary"
                                                                                       wire:navigate>reset filters</a>.</span>

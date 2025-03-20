@@ -92,10 +92,6 @@ html {
         .publication {
             @apply px-5 lg:py-5;
 
-            #publications-tag {
-                @apply text-xs mx-auto font-extralight;
-            }
-
             .publication-title {
                 @apply text-xl font-condensed font-black;
             }
