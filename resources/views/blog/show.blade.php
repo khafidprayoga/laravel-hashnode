@@ -16,35 +16,7 @@
 @endsection
 
 @section('content')
-    <nav id="navigation">
-        <ul id="left-navigation">
-            <li>
-                <a href="{{ route('blog.index') }}" class="btn btn-primary">
-                    << back to home
-                </a>
-            </li>
-        </ul>
-        <a id="center-navigation" href="{{ route('blog.index') }}" class="btn btn-primary">
-            {{ config('app.name') }}
-        </a>
-        <ul id="right-navigation">
-            <li>
-                <a href="{{ route('page.about') }}" class="btn btn-primary">
-                    about me
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('page.contact') }}" class="btn btn-primary">
-                    contact
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('page.privacy') }}" class="btn btn-primary">
-                    privacy policy
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <livewire:navigation/>
     <main id="main-content">
         @if($has_heading)
             <div id="post-toc">
@@ -81,7 +53,7 @@
                                         'tag'=> $slug,
                                         'tagName'=> $tag['name'],
                                         ])
-                            }}">{{ $tag['name'] }}</a>
+                            }}" wire:navigate>{{ $tag['name'] }}</a>
                            </li>
                         @endforeach
                     </ul>
@@ -117,7 +89,12 @@
     </main>
 
     {{-- init highlight.js parser--}}
+
     <script type="text/javascript">
+        document.addEventListener('livewire:navigated', () => {
+            hljs.highlightAll();
+        })
+
         document.addEventListener('DOMContentLoaded', (event) => {
             document.querySelectorAll('pre code').forEach((el) => {
                 hljs.highlightElement(el);
