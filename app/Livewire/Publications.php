@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Services\HashnodeService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
@@ -16,10 +17,13 @@ class Publications extends Component
     public ?string $search = '';
     #[Url(as: 'cursor', except: '')]
     public ?string $nextCursor = '';
+    #[Url(except: '')]
+    public ?string $tagName = '';
 
     // internal state
     public array $posts = [];
     public array $pagination;
+    public ?string $tagCategoryId = null;
 
     public bool $hasNext = true;
     public bool $hasLoaded = false;
@@ -29,8 +33,9 @@ class Publications extends Component
         $this->hashnode = $service;
     }
 
-    public function mount()
+    public function mount(?string $tagId = null)
     {
+        $this->tagCategoryId = $tagId;
         $this->loadMore();
 
     }
@@ -73,10 +78,18 @@ class Publications extends Component
         $params = $this->validateParams();
 
 //        Log::debug("params: " . json_encode($params));
+        $postTags = null;
+
+        if ($this->tagCategoryId !== null) {
+            $postTags = [$this->tagCategoryId];
+        }
+
         $response = $this->hashnode->getPosts(
             search: $params['search'],
             nextCursor: $params['cursor'],
+            tags: $postTags,
         );
+
 
         $this->hasLoaded = true;
         $this->posts = array_merge($this->posts, $response->posts);

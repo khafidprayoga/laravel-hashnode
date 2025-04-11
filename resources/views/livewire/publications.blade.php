@@ -1,4 +1,10 @@
 <div id="publications">
+    @if($tagName != '')
+        <span id="publications-tag" class="text-sm font-extralight md:mx-auto px-5 md:px-0">Showing post with tag: "{{ $tagName }}" or <a
+                href="{{ route('blog.index') }}"
+                class="btn btn-primary"
+                wire:navigate>reset filters</a>.</span>
+    @endif
 {{--    <div class="font-mono text-red-500">--}}
 {{--        <span>--}}
 {{--            {{ $search }}--}}

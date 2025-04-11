@@ -4,5 +4,5 @@
 
 @section('content')
     <livewire:navigation/>
-    <livewire:publications/>
+    <livewire:publications :tagId="$tagId ?? null"/>
 @endsection
