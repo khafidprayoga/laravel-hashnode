@@ -17,14 +17,7 @@ class BlogController extends Controller
 
     public function index(Request $request)
     {
-        $search = $request->query('search', null);
-        $nextCursor = $request->query('nextCursor', null);
-
-        $posts = $this->hashnode->getPosts($search, $nextCursor);
-
-        return view('blog.index', [
-            'posts' => $posts,
-        ]);
+        return view('blog.index');
 
     }
 
@@ -45,21 +38,7 @@ class BlogController extends Controller
 
     public function indexByTag(Request $request, string $tag)
     {
-        $search = $request->query('search', null);
-        $nextCursor = $request->query('nextCursor', null);
-
-        $tagName = $request->query('tagName', null);
         $tagCategoryId = Str::after($tag, '---');
-
-        $posts = $this->hashnode->getPosts(
-            search: $search,
-            nextCursor: $nextCursor,
-            tags: [$tagCategoryId]
-        );
-
-        return view('blog.index_tags', [
-            'posts' => $posts,
-            'tagName' => $tagName,
-        ]);
+        return view('blog.index')->with('tagId', $tagCategoryId);
     }
 }
