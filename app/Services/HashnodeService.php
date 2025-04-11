@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\Publications;
 use App\Exceptions\GraphQLRequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -111,7 +112,7 @@ class HashnodeService
         ?string $search = null,
         ?string $nextCursor = null,
         ?array  $tags = null,
-    ): array
+    ): Publications
     {
         $query = '
         query Feeds($pageSize: Int!, $nextCursor: String) {
@@ -164,14 +165,14 @@ class HashnodeService
 
         ];
 
-        return $response['publication'];
+        return new Publications($response['publication']);
     }
 
     public function getPosts(
         ?string $search = null,
         ?string $nextCursor = null,
         ?array  $tags = null,
-    ): array
+    ): Publications
     {
         $data = $this->searhPostOfPublication(
             search: $search,
@@ -180,7 +181,7 @@ class HashnodeService
             authorIds: [self::authorIdMaster]
         );
 
-        return $data['publication'];
+        return new Publications($data['publication']);
     }
 
     public function getOpinions(

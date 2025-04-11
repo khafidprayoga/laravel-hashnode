@@ -17,15 +17,12 @@ class BlogController extends Controller
 
     public function index(Request $request)
     {
-        $search = $request->query('search', null);
-        $nextCursor = $request->query('nextCursor', null);
+//        $search = $request->query('search', null);
+//        $nextCursor = $request->query('nextCursor', null);
 
-        $publications = $this->hashnode->getPosts($search, $nextCursor);
+//        $publications = $this->hashnode->getPosts($search, $nextCursor);
 //        $publications = $this->hashnode->getFeeds($search, $nextCursor);
-        return view('blog.index', [
-            'posts' => $publications['posts'],
-            'pagination'=> $publications['pageInfo'],
-        ]);
+        return view('blog.index');
 
     }
 
