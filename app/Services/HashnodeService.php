@@ -36,7 +36,7 @@ class HashnodeService
      */
     protected string $url;
 
-    private const paginationPageSize = 10;
+    private const paginationPageSize = 5;
 
     public function __construct()
     {

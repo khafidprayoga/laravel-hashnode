@@ -1,15 +1,22 @@
 <div id="publications">
+{{--    <div class="font-mono text-red-500">--}}
+{{--        <span>--}}
+{{--            {{ $search }}--}}
+{{--        </span>--}}
+{{--        <span>--}}
+{{--            {{ $nextCursor }}--}}
+{{--        </span>--}}
+{{--    </div>--}}
     @foreach($posts as $post)
         @php
-        \Illuminate\Support\Facades\Log::debug("post", ['data', $post]);
-                $post = $post['node'];
+            $post = $post['node'];
 
-                $title = $post['title'];
-                $brief = $post['brief'];
-                $slug = $post['slug'].'--'.$post['id'];
-                $costToread = $post['readTimeInMinutes'];
+            $title = $post['title'];
+            $brief = $post['brief'];
+            $slug = $post['slug'].'--'.$post['id'];
+            $costToread = $post['readTimeInMinutes'];
         @endphp
-        <div class="publication">
+        <div class="publication" wire:key="{{ $post['id'] }}">
             <h2 class="publication-title">{{ $title}}</h2>
             <div class="publication-brief">
                 {!! Purifier::clean($brief) !!}
@@ -20,5 +27,23 @@
                     in {{ $costToread }} minutes>>></a>
             </div>
         </div>
+
     @endforeach
+    @if($hasNext)
+        <div x-intersect="$wire.loadMore" class="mx-auto text-center mt-5 text-sm font-mono">
+            <div wire:loading>
+                Retrieving post...
+            </div>
+        </div>
+    @else
+        <div class="mx-auto  mt-5 h-[50vh]">
+            <div class="text-sm font-mono underline text-center">
+                <blockquote>
+                    <x-clarity-warning-solid class="w-5 h-5 inline-block" />
+                    "There are no more post to display"
+                    <x-clarity-warning-solid class="w-5 h-5 inline-block" />
+                </blockquote>
+            </div>
+        </div>
+    @endif
 </div>
